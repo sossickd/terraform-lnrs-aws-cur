@@ -31,7 +31,7 @@ resource "aws_s3_bucket_public_access_block" "cur-athena" {
 }
 
 resource "aws_s3_bucket_ownership_controls" "cur-athena" {
-  bucket = aws_s3_bucket.cur-athena[0].id
+  bucket = aws_s3_bucket.cur-athena.id
   rule {
     object_ownership = "BucketOwnerPreferred"
   }
