@@ -1,12 +1,12 @@
 #tfsec:ignore:aws-s3-enable-versioning
 #tfsec:ignore:aws-s3-enable-bucket-logging
 resource "aws_s3_bucket" "cur-athena" {
-  bucket = "${var.cluster_name}-cur-athena"
+  bucket = "${var.cluster_name}-us-east-1-cur-athena"
 
   force_destroy = true
 
   tags = merge(var.tags, {
-    Name = "${var.cluster_name}-cur-athena"
+    Name = "${var.cluster_name}-us-east-1-cur-athena"
   })
 }
 
