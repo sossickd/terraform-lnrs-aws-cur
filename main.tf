@@ -37,6 +37,51 @@ resource "aws_s3_bucket_ownership_controls" "cur-athena" {
   }
 }
 
+resource "aws_s3_bucket_policy" "cur-athena" {
+  bucket = aws_s3_bucket.cur-athena.id
+  policy = jsonencode({
+    "Version": "2008-10-17",
+    "Id": "Policy1335892530063",
+    "Statement": [
+        {
+            "Sid": "Stmt1335892150622",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "billingreports.amazonaws.com"
+            },
+            "Action": [
+                "s3:GetBucketAcl",
+                "s3:GetBucketPolicy"
+            ],
+            "Resource": "arn:${partition}:s3:::${aws_s3_bucket.cur-athena.id}",
+            "Condition": {
+                "StringEquals": {
+                    "aws:SourceArn": "arn:aws:cur:us-east-1:${account_id}:definition/*",
+                    "aws:SourceAccount": "${account_id}"
+                }
+            }
+        },
+        {
+            "Sid": "Stmt1335892526596",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "billingreports.amazonaws.com"
+            },
+            "Action": [
+                "s3:PutObject"
+            ],
+            "Resource": "arn:${partition}:s3:::${aws_s3_bucket.cur-athena.id}/*",
+            "Condition": {
+                "StringEquals": {
+                    "aws:SourceArn": "arn:${partition}:cur:us-east-1:${account_id}:definition/*",
+                    "aws:SourceAccount": "${account_id}"
+                }
+            }
+        }
+    ]
+  })
+}
+
 resource "aws_cur_report_definition" "example_cur_report_definition" {
   report_name                = "${var.cluster_name}-cur-report"
   time_unit                  = "DAILY"
