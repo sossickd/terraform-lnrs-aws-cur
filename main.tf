@@ -33,51 +33,51 @@ resource "aws_s3_bucket_public_access_block" "cur-athena" {
 resource "aws_s3_bucket_ownership_controls" "cur-athena" {
   bucket = aws_s3_bucket.cur-athena.id
   rule {
-    object_ownership = "BucketOwnerPreferred"
+    object_ownership = "BucketOwnerEnforced"
   }
 }
 
 resource "aws_s3_bucket_policy" "cur-athena" {
   bucket = aws_s3_bucket.cur-athena.id
   policy = jsonencode({
-    "Version": "2008-10-17",
-    "Id": "Policy1335892530063",
-    "Statement": [
-        {
-            "Sid": "Stmt1335892150622",
-            "Effect": "Allow",
-            "Principal": {
-                "Service": "billingreports.amazonaws.com"
-            },
-            "Action": [
-                "s3:GetBucketAcl",
-                "s3:GetBucketPolicy"
-            ],
-            "Resource": "arn:${partition}:s3:::${aws_s3_bucket.cur-athena.id}",
-            "Condition": {
-                "StringEquals": {
-                    "aws:SourceArn": "arn:aws:cur:us-east-1:${account_id}:definition/*",
-                    "aws:SourceAccount": "${account_id}"
-                }
-            }
+    "Version" : "2008-10-17",
+    "Id" : "Policy1335892530063",
+    "Statement" : [
+      {
+        "Sid" : "Stmt1335892150622",
+        "Effect" : "Allow",
+        "Principal" : {
+          "Service" : "billingreports.amazonaws.com"
         },
-        {
-            "Sid": "Stmt1335892526596",
-            "Effect": "Allow",
-            "Principal": {
-                "Service": "billingreports.amazonaws.com"
-            },
-            "Action": [
-                "s3:PutObject"
-            ],
-            "Resource": "arn:${partition}:s3:::${aws_s3_bucket.cur-athena.id}/*",
-            "Condition": {
-                "StringEquals": {
-                    "aws:SourceArn": "arn:${partition}:cur:us-east-1:${account_id}:definition/*",
-                    "aws:SourceAccount": "${account_id}"
-                }
-            }
+        "Action" : [
+          "s3:GetBucketAcl",
+          "s3:GetBucketPolicy"
+        ],
+        "Resource" : "arn:${var.partition}:s3:::${aws_s3_bucket.cur-athena.id}",
+        "Condition" : {
+          "StringEquals" : {
+            "aws:SourceArn" : "arn:aws:cur:us-east-1:${var.account_id}:definition/*",
+            "aws:SourceAccount" : "${var.account_id}"
+          }
         }
+      },
+      {
+        "Sid" : "Stmt1335892526596",
+        "Effect" : "Allow",
+        "Principal" : {
+          "Service" : "billingreports.amazonaws.com"
+        },
+        "Action" : [
+          "s3:PutObject"
+        ],
+        "Resource" : "arn:${var.partition}:s3:::${aws_s3_bucket.cur-athena.id}/*",
+        "Condition" : {
+          "StringEquals" : {
+            "aws:SourceArn" : "arn:${var.partition}:cur:us-east-1:${var.account_id}:definition/*",
+            "aws:SourceAccount" : "${var.account_id}"
+          }
+        }
+      }
     ]
   })
 }
