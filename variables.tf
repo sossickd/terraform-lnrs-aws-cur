@@ -3,3 +3,9 @@ variable "cluster_name" {
   type        = string
   nullable    = false
 }
+
+variable "cur_athena_bucket_region" {
+  description = "CUR Athena bucket region."
+  type        = string
+  nullable    = false
+}
