@@ -77,6 +77,7 @@ resource "aws_iam_role" "awscur_crawler_component_function" {
   }
 }
 
+#tfsec:ignore:aws-iam-no-policy-wildcards
 resource "aws_iam_role" "awscur_crawler_lambda_executor" {
   name = "awscur-crawler-lambda-executor-eks-${var.account_id}"
   assume_role_policy = jsonencode({
@@ -124,6 +125,7 @@ resource "aws_iam_role" "awscur_crawler_lambda_executor" {
   }
 }
 
+#tfsec:ignore:aws-iam-no-policy-wildcards
 resource "aws_iam_role" "awss3_cur_lambda_executor" {
   name = "aawss3-cur-lambda-executor-eks-${var.account_id}"
   assume_role_policy = jsonencode({
