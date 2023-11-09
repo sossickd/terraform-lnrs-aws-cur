@@ -11,10 +11,17 @@ variable "partition" {
   nullable    = false
 }
 
-variable "cur_athena_bucket_region" {
+variable "cur_report_s3_bucket_region" {
   description = "CUR Athena bucket region."
   type        = string
   default     = "us-east-1"
+  nullable    = false
+}
+
+variable "cur_report_s3_prefix" {
+  description = "CUR S3 prefix"
+  type        = string
+  default     = "opencost-prefix/opencost-report"
   nullable    = false
 }
 

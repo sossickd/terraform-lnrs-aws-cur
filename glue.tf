@@ -11,7 +11,7 @@ resource "aws_glue_crawler" "awscur_crawler" {
   database_name = aws_glue_catalog_database.awscur_database.name
 
   s3_target {
-    path       = "s3://${aws_s3_bucket.cost_and_usage_report.id}/opencost-prefix/opencost-prefix/opencost-report/eks-cost-usage-report-${var.account_id}/eks-cost-usage-report-${var.account_id}"
+    path       = "s3://${aws_s3_bucket.cost_and_usage_report.id}/${var.cur_report_s3_prefix}/eks-cost-usage-report-${var.account_id}/eks-cost-usage-report-${var.account_id}"
     exclusions = ["**.json", "**.yml", "**.sql", "**.csv", "**.gz", "**.zip"]
   }
   schema_change_policy {
@@ -31,7 +31,7 @@ resource "aws_glue_catalog_table" "catalog_table" {
     }
 
     input_format  = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat"
-    location      = "s3://${aws_s3_bucket.cost_and_usage_report.id}/opencost-prefix/opencost-prefix/opencost-report/eks-cost-usage-report-${var.account_id}/cost_and_usage_data_status/"
+    location      = "s3://${aws_s3_bucket.cost_and_usage_report.id}/${var.cur_report_s3_prefix}/eks-cost-usage-report-${var.account_id}/cost_and_usage_data_status/"
     output_format = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat"
     ser_de_info {
       serialization_library = "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe"

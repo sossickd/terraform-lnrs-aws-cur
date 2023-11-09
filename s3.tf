@@ -73,7 +73,7 @@ resource "aws_s3_bucket_policy" "cost_and_usage_report" {
         "Resource" : "arn:${var.partition}:s3:::${aws_s3_bucket.cost_and_usage_report.id}/*",
         "Condition" : {
           "StringEquals" : {
-            "aws:SourceArn" : "arn:${var.partition}:cur:${var.cur_athena_bucket_region}:${var.account_id}:definition/*",
+            "aws:SourceArn" : "arn:${var.partition}:cur:${var.cur_report_s3_bucket_region}:${var.account_id}:definition/*",
             "aws:SourceAccount" : "${var.account_id}"
           }
         }
@@ -88,7 +88,7 @@ resource "aws_s3_bucket_notification" "aws_put_s3_cur_notification" {
   lambda_function {
     lambda_function_arn = aws_lambda_function.awscur_initializer.arn
     events              = ["s3:ObjectCreated:*"]
-    filter_prefix       = "opencost-prefix/opencost-report/eks-cost-usage-report-${var.account_id}/eks-cost-usage-report-${var.account_id}"
+    filter_prefix       = "${var.cur_report_s3_prefix}/eks-cost-usage-report-${var.account_id}/eks-cost-usage-report-${var.account_id}"
   }
 
   depends_on = [
