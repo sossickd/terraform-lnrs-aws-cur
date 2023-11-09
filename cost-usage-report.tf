@@ -1,5 +1,5 @@
 resource "aws_cur_report_definition" "cur_report_definition" {
-  report_name                = "eks-cost-usage-report-${var.account_id}"
+  report_name                = local.cur_report_name
   time_unit                  = "DAILY"
   compression                = "Parquet"
   format                     = "Parquet"

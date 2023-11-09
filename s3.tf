@@ -88,7 +88,7 @@ resource "aws_s3_bucket_notification" "aws_put_s3_cur_notification" {
   lambda_function {
     lambda_function_arn = aws_lambda_function.awscur_initializer.arn
     events              = ["s3:ObjectCreated:*"]
-    filter_prefix       = "${local.cur_report_s3_prefix}/eks-cost-usage-report-${var.account_id}/eks-cost-usage-report-${var.account_id}"
+    filter_prefix       = "${local.cur_report_s3_prefix}/${local.cur_report_name}/${local.cur_report_name}"
   }
 
   depends_on = [

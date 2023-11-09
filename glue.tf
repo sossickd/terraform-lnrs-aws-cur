@@ -9,13 +9,13 @@ resource "aws_glue_catalog_database" "awscur_database" {
 }
 
 resource "aws_glue_crawler" "awscur_crawler" {
-  name          = "AWSCURCrawler-eks-cost-usage-report-${var.account_id}"
+  name          = "AWSCURCrawler-${local.cur_report_name}"
   description   = "A recurring crawler that keeps your CUR table in Athena up-to-date."
   role          = aws_iam_role.awscur_crawler_component_function.arn
   database_name = aws_glue_catalog_database.awscur_database.name
 
   s3_target {
-    path       = "s3://${aws_s3_bucket.cost_and_usage_report.id}/${local.cur_report_s3_prefix}/eks-cost-usage-report-${var.account_id}/eks-cost-usage-report-${var.account_id}"
+    path       = "s3://${aws_s3_bucket.cost_and_usage_report.id}/${local.cur_report_s3_prefix}/${local.cur_report_name}/${local.cur_report_name}"
     exclusions = ["**.json", "**.yml", "**.sql", "**.csv", "**.gz", "**.zip"]
   }
   schema_change_policy {
@@ -24,7 +24,7 @@ resource "aws_glue_crawler" "awscur_crawler" {
   }
 
   tags = merge(var.tags, {
-    Name = "AWSCURCrawler-eks-cost-usage-report-${var.account_id}"
+    Name = "AWSCURCrawler-${local.cur_report_name}"
   })
 }
 
@@ -39,7 +39,7 @@ resource "aws_glue_catalog_table" "catalog_table" {
     }
 
     input_format  = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat"
-    location      = "s3://${aws_s3_bucket.cost_and_usage_report.id}/${local.cur_report_s3_prefix}/eks-cost-usage-report-${var.account_id}/cost_and_usage_data_status/"
+    location      = "s3://${aws_s3_bucket.cost_and_usage_report.id}/${local.cur_report_s3_prefix}/${local.cur_report_name}/cost_and_usage_data_status/"
     output_format = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat"
     ser_de_info {
       serialization_library = "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe"
