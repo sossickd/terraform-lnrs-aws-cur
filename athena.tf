@@ -11,6 +11,10 @@ resource "aws_athena_workgroup" "athena_output" {
     }
   }
 
+  tags = merge(var.tags, {
+    Name = "secondary"
+  })
+
   depends_on = [
     aws_s3_bucket.athena_query_results
   ]

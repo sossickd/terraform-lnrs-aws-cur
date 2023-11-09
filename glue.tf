@@ -2,6 +2,10 @@ resource "aws_glue_catalog_database" "awscur_database" {
   name = "awscur_database-eks-${var.account_id}"
 
   catalog_id = var.account_id
+
+  tags = merge(var.tags, {
+    Name = "awscur_database-eks-${var.account_id}"
+  })
 }
 
 resource "aws_glue_crawler" "awscur_crawler" {
@@ -18,6 +22,10 @@ resource "aws_glue_crawler" "awscur_crawler" {
     update_behavior = "UPDATE_IN_DATABASE"
     delete_behavior = "DELETE_FROM_DATABASE"
   }
+
+  tags = merge(var.tags, {
+    Name = "AWSCURCrawler-eks-cost-usage-report-${var.account_id}"
+  })
 }
 
 resource "aws_glue_catalog_table" "catalog_table" {

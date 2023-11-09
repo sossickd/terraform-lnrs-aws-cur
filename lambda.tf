@@ -23,6 +23,10 @@ resource "aws_lambda_function" "awscur_initializer" {
   tracing_config {
     mode = "PassThrough"
   }
+
+  tags = merge(var.tags, {
+    Name = "awscur-initializer-eks-${var.account_id}"
+  })
 }
 
 resource "aws_lambda_permission" "awss3_cur_event_lambda_permission" {
@@ -52,4 +56,8 @@ resource "aws_lambda_function" "awss3_cur_notification" {
   tracing_config {
     mode = "PassThrough"
   }
+
+  tags = merge(var.tags, {
+    Name = "awss3-cur-notification-eks-${var.account_id}"
+  })
 }

@@ -75,6 +75,10 @@ resource "aws_iam_role" "awscur_crawler_component_function" {
       ]
     })
   }
+
+  tags = merge(var.tags, {
+    Name = "awscur-crawler-component-function-eks-${var.account_id}"
+  })
 }
 
 #tfsec:ignore:aws-iam-no-policy-wildcards
@@ -123,6 +127,10 @@ resource "aws_iam_role" "awscur_crawler_lambda_executor" {
       ]
     })
   }
+
+  tags = merge(var.tags, {
+    Name = "awscur-crawler-lambda-executor-eks-${var.account_id}"
+  })
 }
 
 #tfsec:ignore:aws-iam-no-policy-wildcards
@@ -171,4 +179,8 @@ resource "aws_iam_role" "awss3_cur_lambda_executor" {
       ]
     })
   }
+
+  tags = merge(var.tags, {
+    Name = "aawss3-cur-lambda-executor-eks-${var.account_id}"
+  })
 }
