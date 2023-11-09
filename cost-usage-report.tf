@@ -5,8 +5,8 @@ resource "aws_cur_report_definition" "cur_report_definition" {
   format                     = "Parquet"
   additional_schema_elements = ["RESOURCES"]
   s3_bucket                  = aws_s3_bucket.cost_and_usage_report.id
-  s3_region                  = var.cur_report_s3_bucket_region
-  s3_prefix                  = var.cur_report_s3_prefix
+  s3_region                  = local.cur_report_s3_bucket_region
+  s3_prefix                  = local.cur_report_s3_prefix
   additional_artifacts       = ["ATHENA"]
   report_versioning          = "OVERWRITE_REPORT"
 

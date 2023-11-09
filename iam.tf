@@ -53,7 +53,7 @@ resource "aws_iam_role" "awscur_crawler_component_function" {
             "s3:GetObject",
             "s3:PutObject"
           ]
-          Resource = "arn:${var.partition}:s3:::${aws_s3_bucket.cost_and_usage_report.id}/${var.cur_report_s3_prefix}/eks-cost-usage-report-${var.account_id}/eks-cost-usage-report-${var.account_id}*"
+          Resource = "arn:${var.partition}:s3:::${aws_s3_bucket.cost_and_usage_report.id}/${local.cur_report_s3_prefix}/eks-cost-usage-report-${var.account_id}/eks-cost-usage-report-${var.account_id}*"
         }
       ]
     })
