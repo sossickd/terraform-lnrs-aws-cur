@@ -1,6 +1,6 @@
 #tfsec:ignore:aws-athena-enable-at-rest-encryption
 resource "aws_athena_workgroup" "athena_output" {
-  name = "secondary"
+  name = "eks-cost-usage-report-workgroup-${var.account_id}"
 
   configuration {
     enforce_workgroup_configuration    = true
@@ -12,7 +12,7 @@ resource "aws_athena_workgroup" "athena_output" {
   }
 
   tags = merge(var.tags, {
-    Name = "secondary"
+    Name = "eks-cost-usage-report-workgroup-${var.account_id}"
   })
 
   depends_on = [
