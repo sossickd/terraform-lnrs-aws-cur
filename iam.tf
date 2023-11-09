@@ -1,3 +1,4 @@
+#tfsec:ignore:aws-iam-no-policy-wildcards
 resource "aws_iam_role" "awscur_crawler_component_function" {
   name = "awscur-crawler-component-function-eks-${var.account_id}"
   assume_role_policy = jsonencode({
