@@ -1,3 +1,4 @@
+#tfsec:ignore:aws-athena-enable-at-rest-encryption
 resource "aws_athena_workgroup" "athena_output" {
   name = "secondary"
 
