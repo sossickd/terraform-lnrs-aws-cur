@@ -56,7 +56,7 @@ resource "aws_s3_bucket_policy" "cost_and_usage_report" {
         "Resource" : "arn:${var.partition}:s3:::${aws_s3_bucket.cost_and_usage_report.id}",
         "Condition" : {
           "StringEquals" : {
-            "aws:SourceArn" : "arn:aws:cur:us-east-1:${var.account_id}:definition/*",
+            "aws:SourceArn" : "arn:aws:cur:${local.cur_report_s3_bucket_region}:${var.account_id}:definition/*",
             "aws:SourceAccount" : "${var.account_id}"
           }
         }
