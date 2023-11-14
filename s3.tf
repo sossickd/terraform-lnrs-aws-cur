@@ -100,12 +100,12 @@ resource "aws_s3_bucket_notification" "aws_put_s3_cur_notification" {
 #tfsec:ignore:aws-s3-enable-bucket-logging
 #tfsec:ignore:aws-s3-enable-versioning
 resource "aws_s3_bucket" "athena_query_results" {
-  bucket = "aws-athena-query-results-eks-${var.account_id}"
+  bucket = "lnrs-aws-athena-query-results-${var.account_id}"
 
   force_destroy = true
 
   tags = merge(var.tags, {
-    Name = "aws-athena-query-results-eks-${var.account_id}"
+    Name = "lnrs-aws-athena-query-results-${var.account_id}"
   })
 }
 
